@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "265820452583",
+    "project_id": "hotel-ff471",
+    "storage_bucket": "hotel-ff471.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:265820452583:android:40b4fc803f066ae013d442",
+        "android_client_info": {
+          "package_name": "com.example.hotel"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtXbrz5r0TUjvqK5_vQeuLl09BhuNAIEs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
