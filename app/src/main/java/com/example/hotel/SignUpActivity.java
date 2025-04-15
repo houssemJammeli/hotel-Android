@@ -81,7 +81,8 @@ public class SignUpActivity extends AppCompatActivity {
                             FirebaseUser firebaseUser = auth.getCurrentUser();
                             if (firebaseUser != null) {
                                 String userId = firebaseUser.getUid();
-                                User utilisateur = new User(nom, prenom, user);
+                                String role = "client";
+                                User utilisateur = new User(nom, prenom, user, role);
 
                                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                                 db.collection("users").document(userId)
