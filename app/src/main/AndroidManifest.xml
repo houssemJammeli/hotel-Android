@@ -12,11 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hotel"
         tools:targetApi="31">
-
+        <activity
+            android:name=".SelectServiceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SelectRoomActivity"
+            android:exported="false" />
         <activity
             android:name=".SignUpActivity"
             android:exported="false" />
-
         <activity
             android:name=".LoginActivity"
             android:exported="true">
@@ -25,14 +29,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="false">
-
-
-        </activity>
+            android:exported="false" />
     </application>
 
 </manifest>
