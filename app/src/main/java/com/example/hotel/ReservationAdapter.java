@@ -27,8 +27,7 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
         this.onReservationActionListener = listener;
     }
 
-    public ReservationAdapter(List<Reservation> reservationList, OnReservationActionListener listener) {
-    }
+
 
     @NonNull
     @Override
@@ -65,7 +64,12 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
 
         public void bind(Reservation reservation) {
             roomText.setText(reservation.getRoom());
-            servicesText.setText(reservation.getServices());
+            if (reservation.getServices() != null && !reservation.getServices().isEmpty()) {
+                servicesText.setText("Services :\n- " + String.join("\n- ", reservation.getServices()));
+            } else {
+                servicesText.setText("Aucun service.");
+            }
+
             totalText.setText("$" + reservation.getTotal());
             statusText.setText(reservation.getStatus());
 
