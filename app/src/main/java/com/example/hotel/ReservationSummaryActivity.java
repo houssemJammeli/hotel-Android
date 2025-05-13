@@ -8,14 +8,17 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ReservationSummaryActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +26,7 @@ public class ReservationSummaryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_reservation_summary);
 
         db = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
 
         TextView roomTextView = findViewById(R.id.text_selected_room);
         TextView servicesTextView = findViewById(R.id.text_selected_services);
@@ -69,22 +73,33 @@ public class ReservationSummaryActivity extends AppCompatActivity {
         int totalPrice = roomPrice + servicesPrice;
         totalTextView.setText("💰 Total Price : $" + totalPrice);
 
-
         sendBtn.setOnClickListener(v -> {
-            HashMap<String, Object> reservation = new HashMap<>();
-            reservation.put("room", selectedRoom);
-            reservation.put("services", selectedServices);
-            reservation.put("total", totalPrice);
-            reservation.put("status", "waiting"); // Par défaut
+            FirebaseUser currentUser = auth.getCurrentUser();
 
-            db.collection("reservations")
-                    .add(reservation)
-                    .addOnSuccessListener(documentReference -> {
-                        Toast.makeText(this, "Réservation envoyée ✅", Toast.LENGTH_SHORT).show();
-                    })
-                    .addOnFailureListener(e -> {
-                        Toast.makeText(this, "Erreur d'envoi ❌", Toast.LENGTH_SHORT).show();
-                    });
+            if (currentUser != null) {
+                String userId = currentUser.getUid();
+                String userEmail = currentUser.getEmail();
+
+                HashMap<String, Object> reservation = new HashMap<>();
+                reservation.put("userId", userId);
+                reservation.put("email", userEmail);
+                reservation.put("room", selectedRoom);
+                reservation.put("services", selectedServices);
+                reservation.put("total", totalPrice);
+                reservation.put("status", "waiting");
+
+                db.collection("reservations")
+                        .add(reservation)
+                        .addOnSuccessListener(documentReference -> {
+                            Toast.makeText(this, "Réservation envoyée ✅", Toast.LENGTH_SHORT).show();
+                        })
+                        .addOnFailureListener(e -> {
+                            Toast.makeText(this, "Erreur d'envoi ❌", Toast.LENGTH_SHORT).show();
+                        });
+
+            } else {
+                Toast.makeText(this, "Utilisateur non connecté ❌", Toast.LENGTH_LONG).show();
+            }
         });
     }
 }

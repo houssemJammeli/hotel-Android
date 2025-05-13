@@ -35,5 +35,17 @@ public class ClientHomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button btnMyReservations = findViewById(R.id.btn_my_reservations);
+        btnMyReservations.setOnClickListener(v -> {
+            Intent intent = new Intent(ClientHomeActivity.this, MyReservationsActivity.class);
+            startActivity(intent);
+        });
+
+        Button btnGallery = findViewById(R.id.btn_gallery);
+        btnGallery.setOnClickListener(v -> {
+            Intent intent = new Intent(ClientHomeActivity.this, GalleryActivity.class);
+            startActivity(intent);
+        });
     }
 }
