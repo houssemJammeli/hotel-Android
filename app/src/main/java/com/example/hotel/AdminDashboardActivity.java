@@ -49,7 +49,6 @@ public class AdminDashboardActivity extends AppCompatActivity {
 
             @Override
             public void onReject(Reservation reservation) {
-                // Mettre à jour le statut de la réservation dans Firebase
                 db.collection("reservations").document(reservation.getId())
                         .update("status", "refused")
                         .addOnSuccessListener(aVoid -> {
